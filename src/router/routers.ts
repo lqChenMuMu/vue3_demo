@@ -10,6 +10,18 @@ export const constantRoute = [
         path: '/',
         component: () => import('@/views/gameShow/index.vue'),
         name: 'gameShow',
+    },
+    {
+        //404
+        path: '/404',
+        component: () => import('@/views/404/index.vue'),
+        name: '404',
+    },
+    {
+        // 任意路由
+        path: '/:pathMatch(.*)*',
+        redirect: '/404',
+        name: 'Any',
     }
 ]
 
