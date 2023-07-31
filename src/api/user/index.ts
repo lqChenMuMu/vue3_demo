@@ -9,14 +9,14 @@ enum API {
 }
 
 
-export const login = (data: loginFormData) => {
+export const login = (data: loginFormData) =>
     request.post<any, loginResponseData>(API.LOGIN_URL, data)
-}
+
 
 export const getInfo = () => {
     request.get<any, userInfoResponseData>(API.GET_INFO_URL)
 }
 
 export const logout = () => {
-    request.post<any,any>(API.LOGOUT_URL)
+    request.post<any, any>(API.LOGOUT_URL)
 }
