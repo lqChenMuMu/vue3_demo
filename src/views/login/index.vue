@@ -125,6 +125,10 @@ import { reactive, ref } from 'vue'
 import { User, Lock } from '@element-plus/icons-vue'
 import { ElNotification } from 'element-plus'
 import { useUserStore } from '@/store/user'
+import { useRouter, useRoute } from 'vue-router'
+
+let $router = useRouter()
+let $route = useRoute()
 
 // 登录表单
 const refLoginForm = ref()
@@ -146,19 +150,25 @@ let login = async () => {
   loginLoading.value = true
   try {
     const userStore = await useUserStore().userLogin(loginForm)
+    //编程式导航跳转到展示数据首页
+    //判断登录的时候,路由路径当中是否有query参数，如果有就往query参数挑战，没有跳转到首页
+    let redirect: any = $route.query.redirect
+    $router.push({ path: redirect || '/home' })
     ElNotification({
       title: 'Success',
-      message: '用户名密码错误',
+      message: `欢迎回来`,
       type: 'success',
     })
+    loginLoading.value = false
   } catch (e) {
+    console.log(e)
     ElNotification({
       title: 'Error',
       message: (e as Error).message,
       type: 'error',
     })
+    loginLoading.value = false
   }
-  loginLoading.value = false
 }
 </script>
 
