@@ -23,12 +23,15 @@ export const constantRoute = [
     component: () => import('@/views/404/index.vue'),
     name: '404',
   },
+]
+
+export const dynamicRoute = [
   {
-    // 任意路由
-    path: '/:pathMatch(.*)*',
-    redirect: '/404',
-    name: 'Any',
-  },
+    // 赛事管理
+    path: '/admin/game',
+    component: () => import('@/layout/admin/index.vue'),
+    name: 'adminGameManage',
+  }
 ]
 
 export const anyRoute = {
@@ -37,3 +40,5 @@ export const anyRoute = {
   redirect: '/404',
   name: 'Any',
 }
+
+export const WHITE_PATH = ['/login', '/404', '/'];

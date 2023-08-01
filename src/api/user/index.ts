@@ -14,7 +14,7 @@ export const login = (data: loginFormData) =>
 
 
 export const getInfo = () => {
-    request.get<any, userInfoResponseData>(API.GET_INFO_URL)
+    return request.get<any, userInfoResponseData>(API.GET_INFO_URL)
 }
 
 export const logout = () => {

@@ -41,15 +41,16 @@ export default [
         return { code: 201, msg: '用户名或密码错误' }
       }
       const { token } = checkUser
-      return { code: 0, data: { token } }
+      return { code: 0, data: token }
     },
   },
   // 获取用户信息
   {
     url: '/api/user/info',
     method: 'get',
-    response: ({ request }) => {
+    response: (request) => {
       const token = request.headers.token
+      console.log(`我的token${token}`)
       const checkUser = createUserList().find((item) => item.token === token)
       if (!checkUser) {
         return { code: 201, msg: '用户信息错误' }
