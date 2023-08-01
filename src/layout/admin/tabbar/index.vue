@@ -26,6 +26,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+h2{
+  line-height: $layout-header-height;
+  color: white;
+}
 .userMessageContainer{
   display: flex;
   align-items: center;

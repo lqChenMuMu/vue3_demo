@@ -15,7 +15,6 @@ router.beforeEach(async (to, from, next) => {
     //from:你从来个路由而来
     //next:路由的放行函数
     nprogress.start()
-    debugger;
 
     // 不需要登录的页面直接放行
     if(WHITE_PATH.includes(to.path)){
@@ -27,8 +26,6 @@ router.beforeEach(async (to, from, next) => {
     const token = useUserStore().userInfo.token
     // 2. 获取仓库中的用户名
     const username = useUserStore().userInfo.username
-    console.log(to.path)
-    console.log(username)
     // 有token表示已登录
     if (token) {
         // 有username 放行

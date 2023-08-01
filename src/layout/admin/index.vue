@@ -1,71 +1,26 @@
 <template>
   <div class="main">
-    <div class="layout_left">123</div>
+    <div class="layout_left">
+      <el-menu>
+        <Menu :menuList="userInfo.menus" />
+      </el-menu>
+    </div>
     <div class="layout_top">
       <Tabbar />
     </div>
     <el-scrollbar class="layout_main">
-      789
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>2</div>
-      <div>2</div>
-      <div>2</div>
-      <div>2</div>
-      <div>2</div>
-      <div>2</div>
-      <div>2</div>
-      <div>2</div>
-      <div>2</div>
-      <div>2</div>
-      <div>2</div>
-      <div>2</div>
-      <div>2</div>
-      <div>2</div>
-      <div>2</div>
-      <div>2</div>
-      <div>2</div>
-      <div>2</div>
-      <div>2</div>
-      <div>2</div>
-      <div>2</div>
-      <div>2</div>
+      <Main></Main>
     </el-scrollbar>
   </div>
 </template>
 
 <script setup lang="ts">
 import Tabbar from '@/layout/admin/tabbar/index.vue'
+import Menu from './menu/index.vue'
+import { useUserStore } from '@/store/user'
+import Main from '@/layout/admin/main/index.vue'
+
+const userInfo = useUserStore().userInfo
 </script>
 
 <style scoped lang="scss">
