@@ -5,7 +5,7 @@ export interface loginFormData {
 
 export interface ResponseData {
     code: number;
-    message: string;
+    msg: string;
     data: any;
 }
 

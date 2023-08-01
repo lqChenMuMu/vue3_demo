@@ -17,8 +17,9 @@ export const useUserStore = defineStore('user', () => {
         let result: loginResponseData = await login(data);
         if (result.code === 0) {
             SET_TOKEN(result.data as string);
+            return 'ok';
         } else {
-            return Promise.reject(result.message);
+            return Promise.reject(new Error(result.msg));
         }
     }
 
