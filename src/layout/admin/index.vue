@@ -1,7 +1,11 @@
 <template>
   <div class="main">
     <div class="layout_left" :class="{ fold: isCollapse ? true : false }">
-      <el-menu :collapse="isCollapse" :collapse-transition="false">
+      <el-menu
+        :collapse="isCollapse"
+        :collapse-transition="false"
+        :default-active="$route.path"
+      >
         <Menu :menuList="userInfo.menus" />
       </el-menu>
       <div class="menuCollapse" :class="{ fold: isCollapse ? true : false }">
@@ -13,7 +17,10 @@
     <div class="layout_top">
       <Tabbar />
     </div>
-    <el-scrollbar class="layout_main" :class="{ fold: isCollapse ? true : false }">
+    <el-scrollbar
+      class="layout_main"
+      :class="{ fold: isCollapse ? true : false }"
+    >
       <Main></Main>
     </el-scrollbar>
   </div>
@@ -25,10 +32,11 @@ import Menu from './menu/index.vue'
 import { useUserStore } from '@/store/user'
 import Main from '@/layout/admin/main/index.vue'
 import { ref } from 'vue'
+import { useRoute } from 'vue-router'
 
 const userInfo = useUserStore().userInfo
-
-let isCollapse = ref(false);
+const $router = useRoute()
+let isCollapse = ref(false)
 </script>
 
 <style scoped lang="scss">
@@ -84,7 +92,7 @@ let isCollapse = ref(false);
 
   &.fold {
     width: calc(100vw - $layout-sider-min-width);
-    left: $layout-sider-min-width
+    left: $layout-sider-min-width;
   }
 }
 </style>
