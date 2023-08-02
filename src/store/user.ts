@@ -14,7 +14,6 @@ import cloneDeep from 'lodash/cloneDeep'
 
 function filterUserMenu(dynamicRouter: any, menu: any) {
   return dynamicRouter.filter((route: any) => {
-    debugger
     if (menu.includes(route.meta.menu)) {
       if (route.children && route.children.length > 1) {
         route.children = filterUserMenu(route.children, menu)
@@ -49,7 +48,6 @@ export const useUserStore = defineStore('user', () => {
       userInfo.username = result.data.username
       userInfo.avatar = result.data.avatar
       // 设置用户可以操作的菜单权限
-      debugger
       const userDynamicRoutes = filterUserMenu(
         cloneDeep(dynamicRoute),
         result.data.menus,

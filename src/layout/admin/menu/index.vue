@@ -3,35 +3,24 @@
     <!-- 没有子路由 -->
     <template v-if="!menu.children">
       <el-menu-item :index="menu.path" v-if="!menu.meta.hidden" @click="go">
-        <template #title>
-          <el-icon>
-            <component :is="menu.meta.icon"></component>
-          </el-icon>
-          <span>{{ menu.meta.title }}</span>
-        </template>
+        <el-icon>
+          <component :is="menu.meta.icon"></component>
+        </el-icon>
+        <span>{{ menu.meta.title }}</span>
       </el-menu-item>
     </template>
     <!-- 有且只有一个子路由 -->
     <template v-if="menu.children && menu.children.length == 1">
-      <el-menu-item
-        :index="menu.children[0].path"
-        v-if="!menu.children[0].meta.hidden"
-        @click="go"
-      >
-        <template #title>
-          <el-icon>
-            <component :is="menu.children[0].meta.icon"></component>
-          </el-icon>
-          <span>{{ menu.children[0].meta.title }}</span>
-        </template>
+      <el-menu-item :index="menu.children[0].path" v-if="!menu.children[0].meta.hidden" @click="go">
+        <el-icon>
+          <component :is="menu.children[0].meta.icon"></component>
+        </el-icon>
+        <span>{{ menu.children[0].meta.title }}</span>
       </el-menu-item>
     </template>
     <!-- 有且有多个子路由 -->
 
-    <el-sub-menu
-      v-if="menu.children && menu.children.length > 1"
-      :index="menu.path"
-    >
+    <el-sub-menu v-if="menu.children && menu.children.length > 1" :index="menu.path">
       <template #title>
         <el-icon>
           <component :is="menu.meta.icon"></component>
@@ -59,5 +48,4 @@ export default {
   name: 'Menu',
 }
 </script>
-<style scoped lang='scss'>
-</style>
+<style scoped lang='scss'></style>
