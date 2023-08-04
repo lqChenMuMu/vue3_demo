@@ -18,7 +18,10 @@ export interface userInfoResponseData extends ResponseData {
         username: string
         rules: string[]
         avatar: string
-        menus: string[]
-        buttons: string[]
+        adminMenus: string[]
+        managerMenus: string[]
+        unitMenus: string[]
+        buttons: string[],
+        endpoint: string
     }
 }

@@ -1,5 +1,5 @@
 import router from '@/router'
-import { WHITE_PATH } from '@/router/routers'
+import { WHITE_PATH } from '@/router/commonRouters'
 //@ts-ignore
 import nprogress from 'nprogress'
 //引入进度条样式
@@ -17,10 +17,11 @@ router.beforeEach(async (to, from, next) => {
     nprogress.start()
 
     // 不需要登录的页面直接放行
-    if(WHITE_PATH.includes(to.path)){
+    if (WHITE_PATH.includes(to.path)) {
         next();
         return;
     }
+    console.log(to.path)
 
     // 1. 获取仓库中的token
     const token = useUserStore().userInfo.token
@@ -30,13 +31,15 @@ router.beforeEach(async (to, from, next) => {
     if (token) {
         // 有username 放行
         if (username) {
-            next();
+            const userEndpoint = useUserStore().userInfo.endpoint;
+            to.path == '/home' ? next({path: endpointHome(userEndpoint), query: { redirect: to.path }}) : next();
         } else {
             // 获取用户登录信息
             await useUserStore().getUserInfo();
+            const userEndpoint = useUserStore().userInfo.endpoint;
             //放行
             //万一:刷新的时候是异步路由,有可能获取到用户信息、异步路由还没有加载完毕,出现空白的效果
-            next({ ...to })
+            next({path: endpointHome(userEndpoint), query: {}})
         }
     } else {
         // 跳转到登录界面
@@ -53,3 +56,14 @@ router.beforeEach(async (to, from, next) => {
 router.afterEach((to: any, from: any) => {
     nprogress.done()
 })
+
+let endpointHome = (endpoint: string) => {
+    debugger;
+    if (endpoint === 'admin') {
+        return '/admin/home'
+    }else if (endpoint === 'manager') {
+        return '/manager/home'
+    } else if (endpoint === 'unit') {
+        return '/unit/home'
+    }
+}

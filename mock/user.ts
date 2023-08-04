@@ -9,8 +9,10 @@ function createUserList() {
       desc: '平台管理员',
       roles: ['平台管理员'],
       buttons: ['cuser.detail'],
-      menus: ['home','game','setting','optional','rules'],
+      adminMenus: ['home', 'game', 'setting', 'optional', 'rules'],
+      managerMenus: [],
       token: 'Admin Token',
+      endpoint: 'admin'
     },
     {
       userId: 2,
@@ -21,8 +23,10 @@ function createUserList() {
       desc: '系统管理员',
       roles: ['系统管理员'],
       buttons: ['cuser.detail', 'cuser.user'],
-      menus: ['home'],
+      adminMenu: [],
+      managerMenus: ['manager_home'],
       token: 'System Token',
+      endpoint: 'manager'
     },
   ]
 }
@@ -56,6 +60,14 @@ export default [
         return { code: 201, msg: '用户信息错误' }
       }
       return { code: 0, data: checkUser }
+    },
+  },
+  // 退出登录
+  {
+    url: '/api/user/logout',
+    method: 'post',
+    response: () => {
+      return { code: 0, data: 'success' }
     },
   },
 ]

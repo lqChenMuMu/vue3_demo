@@ -18,5 +18,5 @@ export const getInfo = () => {
 }
 
 export const logout = () => {
-    request.post<any, any>(API.LOGOUT_URL)
+  return request.post<any, any>(API.LOGOUT_URL)
 }
