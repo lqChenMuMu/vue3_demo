@@ -28,6 +28,21 @@ function createUserList() {
       token: 'System Token',
       endpoint: 'manager'
     },
+    {
+      userId: 3,
+      avatar:
+        'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+      username: 'unit',
+      password: '123456',
+      desc: '单位',
+      roles: ['单位'],
+      buttons: ['cuser.detail', 'cuser.user'],
+      adminMenu: [],
+      managerMenus: [],
+      unitMenus:['unit_home','unit_person_event'],
+      token: 'Unit Token',
+      endpoint: 'unit'
+    },
   ]
 }
 

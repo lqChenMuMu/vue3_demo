@@ -20,10 +20,10 @@
 </template>
 
 <script setup lang="ts">
-import Tabbar from '@/layout/vertical/tabbar/index.vue'
-import Menu from './menu/index.vue'
+import Tabbar from '@/layout/common/tabbar/index.vue'
+import Menu from '@/layout/common/menu/index.vue'
 import { useUserStore } from '@/store/user'
-import Main from '@/layout/vertical/main/index.vue'
+import Main from '@/layout/common/main/index.vue'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 

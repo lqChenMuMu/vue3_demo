@@ -11,6 +11,7 @@ import { GET_TOKEN, SET_TOKEN, REMOVE_TOKEN } from '@/utils/token'
 import { constantRoute, anyRoute } from '@/router/commonRouters'
 import { adminRouters } from '@/router/adminRouters'
 import { managerRouters } from '@/router/managerRouters'
+import { unitRouters } from '@/router/unitRouters'
 import router from '@/router'
 import cloneDeep from 'lodash/cloneDeep'
 
@@ -56,6 +57,7 @@ export const useUserStore = defineStore('user', () => {
       userInfo.username = result.data.username
       userInfo.avatar = result.data.avatar
       userInfo.endpoint = result.data.endpoint
+      debugger;
 
       // 设置用户可以操作的菜单权限
       const userAdminMenus = filterUserMenu(
@@ -67,7 +69,7 @@ export const useUserStore = defineStore('user', () => {
         result.data.managerMenus,
       )
       const userUnitMenus = filterUserMenu(
-        cloneDeep(managerRouters),
+        cloneDeep(unitRouters),
         result.data.unitMenus,
       )
       debugger;
