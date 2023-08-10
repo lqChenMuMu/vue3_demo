@@ -146,7 +146,6 @@ const loginRule = {
 }
 
 let login = async () => {
-  console.log('开始执行登录。。。')
   await refLoginForm.value.validate()
   loginLoading.value = true
   try {

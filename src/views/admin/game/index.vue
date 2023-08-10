@@ -52,8 +52,7 @@
       <el-table-column prop="address" label="地点" />
       <el-table-column prop="gameId" label="进入">
         <template #default="{ row }">
-          <!-- <router-link :to="{ path: '/manager/home' }" target="_blank">进入</router-link> -->
-          <a href="http://127.0.0.1:5173/#/manager/home" target="_blank">进入</a>
+          <router-link :to="{ path: '/manager/home' }" target="_blank">进入</router-link>
           <!-- <el-button @click="entranceGame(row.gameId)" type="primary" size="small">进入</el-button> -->
         </template>
       </el-table-column>

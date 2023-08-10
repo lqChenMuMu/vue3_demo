@@ -1,20 +1,24 @@
-export const SET_TOKEN = (token: string) => {
-    localStorage.setItem('token', token);
-}
+// export const SET_TOKEN = (token: string) => {
+//     localStorage.setItem('token', token);
+// }
 
-export const GET_TOKEN = () => {
-    return localStorage.getItem('token');
-}
+// export const GET_TOKEN = () => {
+//     return localStorage.getItem('token');
+// }
 
-//本地存储删除数据方法
-export const REMOVE_TOKEN = () => {
-    localStorage.removeItem('TOKEN')
-}
+// //本地存储删除数据方法
+// export const REMOVE_TOKEN = () => {
+//     localStorage.removeItem('token')
+// }
 
-export const SET_USERNAME = (token: string) => {
-    localStorage.setItem('username', token);
-}
+// export const SET_USERNAME = (username: string) => {
+//     localStorage.setItem('username', username);
+// }
 
-export const GET_USERNAME = () => {
-    return localStorage.getItem('username');
-}
+// export const GET_USERNAME = () => {
+//     return localStorage.getItem('username');
+// }
+
+// export const REMOVE_USERNAME = () => {
+//     localStorage.removeItem('username')
+// }
