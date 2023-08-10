@@ -21,6 +21,16 @@ export const constantRoute = [
         },
     },
     {
+        // 登录
+        path: '/home',
+        component: () => import('@/views/login/home.vue'),
+        name: 'home',
+        meta: {
+            title: '登录',
+            hidden: true,
+        },
+    },
+    {
         // 赛事列表
         path: '/',
         component: () => import('@/views/gameShow/index.vue'),

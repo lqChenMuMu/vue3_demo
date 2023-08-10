@@ -10,7 +10,7 @@ function createUserList() {
       roles: ['平台管理员'],
       buttons: ['cuser.detail'],
       adminMenus: ['home', 'game', 'setting', 'optional', 'rules'],
-      managerMenus: [],
+      managerMenus: ['manager_home','manager_unit'],
       token: 'Admin Token',
       endpoint: 'admin'
     },

@@ -10,3 +10,11 @@ export const GET_TOKEN = () => {
 export const REMOVE_TOKEN = () => {
     localStorage.removeItem('TOKEN')
 }
+
+export const SET_USERNAME = (token: string) => {
+    localStorage.setItem('username', token);
+}
+
+export const GET_USERNAME = () => {
+    return localStorage.getItem('username');
+}

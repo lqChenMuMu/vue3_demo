@@ -52,7 +52,9 @@
       <el-table-column prop="address" label="地点" />
       <el-table-column prop="gameId" label="进入">
         <template #default="{ row }">
-          <el-button type="primary" size="small">进入</el-button>
+          <!-- <router-link :to="{ path: '/manager/home' }" target="_blank">进入</router-link> -->
+          <a href="http://127.0.0.1:5173/#/manager/home" target="_blank">进入</a>
+          <!-- <el-button @click="entranceGame(row.gameId)" type="primary" size="small">进入</el-button> -->
         </template>
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="180">
@@ -68,7 +70,7 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue'
-import { CirclePlus, EditPen, Delete } from '@element-plus/icons-vue'
+import router from '@/router'
 
 const formInline = reactive({
   user: '',
@@ -83,9 +85,6 @@ const searchParams = reactive({
   gameName: ''
 })
 
-const onSubmit = () => {
-  console.log('submit!')
-}
 const tableData = [
   {
     gameName: '2023年室内田径邀请赛（第1站）',
@@ -96,6 +95,7 @@ const tableData = [
     beginTime: '2023-02-11',
     endTime: '2023-02-12',
     address: '陕西丈八训练中心田径馆',
+    gameId: 1
   },
   {
     gameName: '2023年全国马拉松锦标赛（无锡站）·布达佩斯世锦赛及杭州亚运会马拉松选拔赛',
@@ -106,6 +106,7 @@ const tableData = [
     beginTime: '2023-02-11',
     endTime: '2023-02-12',
     address: '广西壮族自治区体育局江南训练基地',
+    gameId: 2
   },
 ]
 
@@ -126,6 +127,24 @@ const isOpenOptions = [
     value: 0
   }
 ]
+
+const onSubmit = () => {
+  console.log('submit!')
+}
+
+const entranceGame = (gameId: number) => {
+  console.log(gameId)
+  debugger;
+  console.log(router.hasRoute('managerHome'))
+  // let newUrl = router.resolve({
+  //   path: "/admin/setting/optional",
+  //   // query: {
+  //   //   data: JSON.stringify(gameId),
+  //   // },
+  // });
+  console.log(newUrl.href)
+  // window.open(newUrl.href, "_blank");
+}
 
 </script>
 <style scoped lang='scss'>

@@ -4,7 +4,7 @@ export interface UserInfo {
     adminMenus: string[],
     managerMenus: string[],
     unitMenus: string[],
-    username: string
+    username: string | null,
     avatar: string,
     endpoint: string
 }

@@ -7,7 +7,7 @@ import {
   loginResponseData,
   userInfoResponseData,
 } from '@/api/user/type'
-import { GET_TOKEN, SET_TOKEN, REMOVE_TOKEN } from '@/utils/token'
+import { GET_TOKEN, SET_TOKEN, REMOVE_TOKEN,SET_USERNAME,GET_USERNAME } from '@/utils/token'
 import { constantRoute, anyRoute } from '@/router/commonRouters'
 import { adminRouters } from '@/router/adminRouters'
 import { managerRouters } from '@/router/managerRouters'
@@ -55,6 +55,7 @@ export const useUserStore = defineStore('user', () => {
     let result: userInfoResponseData = await getInfo()
     if (result.code === 0) {
       userInfo.username = result.data.username
+      SET_USERNAME(userInfo.username)
       userInfo.avatar = result.data.avatar
       userInfo.endpoint = result.data.endpoint
       debugger;

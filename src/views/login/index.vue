@@ -146,13 +146,15 @@ const loginRule = {
 }
 
 let login = async () => {
+  console.log('开始执行登录。。。')
   await refLoginForm.value.validate()
   loginLoading.value = true
   try {
-    const userStore = await useUserStore().userLogin(loginForm)
+    await useUserStore().userLogin(loginForm)
     //编程式导航跳转到展示数据首页
     //判断登录的时候,路由路径当中是否有query参数，如果有就往query参数挑战，没有跳转到首页
     let redirect: any = $route.query.redirect
+    console.log({ path: redirect || '/home' })
     $router.push({ path: redirect || '/home' })
     ElNotification({
       title: 'Success',
