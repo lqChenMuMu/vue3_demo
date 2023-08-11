@@ -1,12 +1,12 @@
 
 
 <template>
-    <VerticalMenu :menuList="userInfo.managerMenus"/>
+    <VerticalMenu :menuList="userStore.userInfo.managerRouters"/>
 </template>
 <script setup lang='ts'>
 import VerticalMenu from '@/layout/vertical/index.vue'
 import { useUserStore } from '@/store/user';
-const userInfo = useUserStore().userInfo
+const userStore = useUserStore()
 </script>
 <style lang='less' scoped>
 

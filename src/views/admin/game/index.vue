@@ -52,8 +52,8 @@
       <el-table-column prop="address" label="地点" />
       <el-table-column prop="gameId" label="进入">
         <template #default="{ row }">
-          <router-link :to="{ path: '/manager/home' }" target="_blank">进入</router-link>
-          <!-- <el-button @click="entranceGame(row.gameId)" type="primary" size="small">进入</el-button> -->
+          <!-- <router-link :to="{ path: '/manager/home' }" target="_blank">进入</router-link> -->
+          <el-button @click="entranceGame(row.gameId)" type="primary" size="small">进入</el-button>
         </template>
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="180">
@@ -132,17 +132,10 @@ const onSubmit = () => {
 }
 
 const entranceGame = (gameId: number) => {
-  console.log(gameId)
-  debugger;
-  console.log(router.hasRoute('managerHome'))
-  // let newUrl = router.resolve({
-  //   path: "/admin/setting/optional",
-  //   // query: {
-  //   //   data: JSON.stringify(gameId),
-  //   // },
-  // });
-  console.log(newUrl.href)
-  // window.open(newUrl.href, "_blank");
+  let newUrl = router.resolve({
+    path: "/manager/home",
+  });
+  window.open(newUrl.href, "_blank");
 }
 
 </script>

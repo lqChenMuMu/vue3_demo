@@ -1,9 +1,9 @@
 
 <template>
-    <HorizontalMenu :menuList="userInfo.unitMenus"/>
+    <HorizontalMenu :menuList="userStore.userInfo.unitRouters"/>
 </template>
 <script setup lang='ts'>
 import HorizontalMenu from '@/layout/horizontal/index.vue'
 import { useUserStore } from '@/store/user';
-const userInfo = useUserStore().userInfo
+const userStore = useUserStore()
 </script>

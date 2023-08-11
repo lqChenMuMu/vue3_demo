@@ -5,8 +5,8 @@ import nprogress from 'nprogress'
 //引入进度条样式
 import 'nprogress/nprogress.css'
 nprogress.configure({ showSpinner: false })
-
 import { useUserStore } from '@/store/user'
+import { useRoutersStore } from '@/store/routers'
 
 //全局守卫:项目当中任意路由切换都会触发的钩子
 //全局前置守卫
@@ -28,19 +28,29 @@ router.beforeEach(async (to, from, next) => {
   // 2. 获取仓库中的用户名
   const username = useUserStore().userInfo.username
   // 有token表示已登录
-  debugger
+  // debugger
   if (token) {
+    debugger;
     // 有username 放行
-    console.log(username ? '有username' : '没有username')
-    console.log('有没有adminHome',router.hasRoute('adminHome'))
     if (username) {
-      const userEndpoint = useUserStore().userInfo.endpoint
-      to.path == '/home'
-        ? next({
-            path: endpointHome(userEndpoint),
-            query: {},
-          })
-        : next()
+      // 如果没有路由，初始化路由
+      if (!useRoutersStore().hasRouters()) {
+        useRoutersStore().initRouters()
+        //放行
+        //万一:刷新的时候是异步路由,有可能获取到用户信息、异步路由还没有加载完毕,出现空白的效果
+        if (to.path === '/home') {
+          next({ path: endpointHome(useUserStore().userInfo.endpoint), query: {} })
+        } else {
+          next({ ...to })
+        }
+      }
+      else {
+        if (to.path === '/home') {
+          next({ path: endpointHome(useUserStore().userInfo.endpoint), query: {} })
+        } else {
+          next()
+        }
+      }
     } else {
       // 获取用户登录信息
       await useUserStore().getUserInfo()
@@ -55,7 +65,7 @@ router.beforeEach(async (to, from, next) => {
     if (to.path == '/login') {
       next()
     } else {
-      next({ path: '/login', query: { redirect: to.path } })
+      next({ path: '/login', query: {} })
     }
   }
 })
@@ -65,8 +75,21 @@ router.afterEach((to: any, from: any) => {
   nprogress.done()
 })
 
+let getNextParam = (path: string, endpoint: string) => {
+  if (path === '/home') {
+    let homePath = endpointHome(endpoint)
+    return {
+      path: homePath
+    }
+  } else {
+    return {
+      path: path,
+    }
+  }
+}
+
 let endpointHome = (endpoint: string) => {
-  debugger
+  // debugger
   if (endpoint === 'admin') {
     return '/admin/home'
   } else if (endpoint === 'manager') {

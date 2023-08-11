@@ -1,6 +1,6 @@
 
 <template>
-    <VerticalMenu :menuList="userInfo.adminMenus"/>
+    <VerticalMenu :menuList="userStore.userInfo.adminRouters"/>
 </template>
 
 
@@ -9,7 +9,7 @@
 import VerticalMenu from '@/layout/vertical/index.vue'
 import { useUserStore } from '@/store/user';
 
-let userInfo = useUserStore().userInfo
+let userStore = useUserStore()
 
 </script>
 <style lang='less' scoped></style>
