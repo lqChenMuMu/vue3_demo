@@ -5,8 +5,8 @@ export interface pageQueryParams{
 }
 
 // 通用返回结果
-export interface BaseResponse<T>{
+export interface BaseResponse{
     code: number,
-    msg: string | number,
-    data: T
+    msg: string | null,
+    data: any
 }

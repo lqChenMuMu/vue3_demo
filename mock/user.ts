@@ -49,7 +49,7 @@ function createUserList() {
 export default [
   // 用户登录接口
   {
-    url: '/api/user/login',
+    url: '/auth/login',
     method: 'post',
     response: ({ body }) => {
       const { username, password } = body
@@ -65,7 +65,7 @@ export default [
   },
   // 获取用户信息
   {
-    url: '/api/user/info',
+    url: '/user/info',
     method: 'get',
     response: (request) => {
       const token = request.headers.token
@@ -79,7 +79,7 @@ export default [
   },
   // 退出登录
   {
-    url: '/api/user/logout',
+    url: '/auth/logout',
     method: 'post',
     response: () => {
       return { code: 0, data: 'success' }

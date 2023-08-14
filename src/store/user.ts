@@ -36,7 +36,7 @@ export const useUserStore = defineStore({
   actions: {
     async userLogin(data: loginFormData) {
       let result: loginResponseData = await login(data)
-      if (result.code === 0) {
+      if (result.code === 200) {
         this.userInfoReset();
         this.userInfo.token = result.data
         return 'ok'

@@ -1,6 +1,10 @@
+import { BaseResponse } from '@/api/common'
+
 export interface loginFormData {
-    username: string;
+    account: string;
     password: string;
+    validCode: string,
+    validCodeReqNo: string
 }
 
 export interface ResponseData {
@@ -23,5 +27,12 @@ export interface userInfoResponseData extends ResponseData {
         unitMenus: string[]
         buttons: string[],
         endpoint: string
+    }
+}
+
+export interface validImgRespData extends BaseResponse {
+    data: {
+        validCodeBase64: string,
+        validCodeReqNo: string
     }
 }
