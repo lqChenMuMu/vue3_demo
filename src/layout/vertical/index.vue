@@ -45,7 +45,7 @@ defineProps(['menuList'])
   position: fixed;
   top: $layout-header-height;
   height: calc(100vh - $layout-header-height);
-
+  transition: all 0.5s;
   .menuCollapse {
     width: $layout-sider-width;
     height: 5vh;
@@ -56,15 +56,17 @@ defineProps(['menuList'])
     justify-content: center;
     align-items: center;
     padding-left: ($layout-sider-width * 0.8);
-
+    transition: all 0.5s;
     &.fold {
       width: $layout-sider-min-width;
       padding-left: 0;
+      transition: all 0.5s;
     }
   }
 
   &.fold {
     width: $layout-sider-min-width;
+    transition: all 0.5s;
   }
 }
 
@@ -84,10 +86,11 @@ defineProps(['menuList'])
   position: relative;
   left: $layout-sider-width;
   padding: 10px;
-
+  transition: all 0.5s;
   &.fold {
     width: calc(100vw - $layout-sider-min-width);
     left: $layout-sider-min-width;
+    transition: all 0.5s;
   }
 }
 </style>

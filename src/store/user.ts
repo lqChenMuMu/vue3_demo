@@ -60,7 +60,7 @@ export const useUserStore = defineStore({
 
     async getUserInfo() {
       let result: userInfoResponseData = await getInfo()
-      if (result.code === 0) {
+      if (result.code === 200) {
         debugger;
         this.userInfo.username = result.data.username
         this.userInfo.avatar = result.data.avatar
@@ -72,6 +72,7 @@ export const useUserStore = defineStore({
         this.userInfo.hasRouter = false
         return 'ok'
       } else {
+        console.log('errorMsg:',result)
         return Promise.reject(new Error(result.msg))
       }
     },

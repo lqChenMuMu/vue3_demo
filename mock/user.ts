@@ -52,20 +52,20 @@ export default [
     url: '/auth/login',
     method: 'post',
     response: ({ body }) => {
-      const { username, password } = body
+      const { account, password } = body
       const checkUser = createUserList().find(
-        (item) => item.username === username && item.password === password,
+        (item) => item.username === account && item.password === password,
       )
       if (!checkUser) {
         return { code: 201, msg: '用户名或密码错误' }
       }
       const { token } = checkUser
-      return { code: 0, data: token }
+      return { code: 200, data: token }
     },
   },
   // 获取用户信息
   {
-    url: '/user/info',
+    url: '/auth/info',
     method: 'get',
     response: (request) => {
       const token = request.headers.token
@@ -74,7 +74,7 @@ export default [
       if (!checkUser) {
         return { code: 201, msg: '用户信息错误' }
       }
-      return { code: 0, data: checkUser }
+      return { code: 200, data: checkUser }
     },
   },
   // 退出登录
@@ -85,4 +85,12 @@ export default [
       return { code: 0, data: 'success' }
     },
   },
+  // 验证码
+  {
+    url: '/auth/getPicCaptcha',
+    method: 'get',
+    response:() => {
+      return {code: 200, data: {validCodeBase64: '', validCodeReqNo: '1234'}}
+    }
+  }
 ]
