@@ -4,7 +4,7 @@ import { loginFormData, loginResponseData, userInfoResponseData, validImgRespDat
 
 enum API {
     LOGIN_URL = '/auth/login',
-    GET_INFO_URL = '/auth/info',
+    GET_INFO_URL = '/user/info',
     LOGOUT_URL = '/auth/logout',
     VALID_IMG = '/auth/getPicCaptcha'
 }

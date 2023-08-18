@@ -41,7 +41,7 @@
 
   <!-- 表格 -->
   <div class="content_table_container">
-    <el-table :data="tableData" border style="width: 100%" table-layout="auto">
+    <el-table :data="tableData" border style="width: 100%" table-layout="auto" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
       <el-table-column prop="gameName" label="比赛名称" />
       <el-table-column prop="isOpen" label="报名状态" width="90" />
       <el-table-column prop="gameType" label="赛事类型" width="90" />
@@ -154,17 +154,9 @@ const entranceGame = (gameId: number) => {
 }
 
 .handle_container {
-  padding: 10px 10px 10px 0;
+  background-color: white;
+  padding: 10px 10px 0px 10px;
   height: 55px;
-
-  button {
-    margin-right: 8px;
-    margin-bottom: 10px;
-  }
-
-  .el-button+.el-button {
-    margin-left: 0;
-  }
 
   .handle_container_left {
     float: left;

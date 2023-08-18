@@ -85,7 +85,7 @@ defineProps(['menuList'])
   height: calc(100vh - $layout-header-height);
   position: relative;
   left: $layout-sider-width;
-  padding: 10px;
+  padding: 20px;
   transition: all 0.5s;
   &.fold {
     width: calc(100vw - $layout-sider-min-width);
