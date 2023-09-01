@@ -8,7 +8,7 @@ export const adminRouters = [
       title: '',
       icon: '',
       hidden: false,
-      menu: 'home',
+      menu: 'admin_home',
     },
     children: [
       {
@@ -18,7 +18,7 @@ export const adminRouters = [
           title: '首页',
           icon: 'HomeFilled',
           hidden: false,
-          menu: 'home',
+          menu: 'admin_home',
         },
       }
     ]
@@ -30,7 +30,7 @@ export const adminRouters = [
     name: 'adminGameManage',
     meta: {
       hidden: false,
-      menu: 'game',
+      menu: 'admin_game',
     },
     children: [
       {
@@ -40,7 +40,7 @@ export const adminRouters = [
           title: '赛事管理',
           icon: 'Suitcase',
           hidden: false,
-          menu: 'game',
+          menu: 'admin_game',
         },
       }
     ]
@@ -54,7 +54,7 @@ export const adminRouters = [
       title: '报名设置',
       icon: 'Cpu',
       hidden:false,
-      menu: 'setting',
+      menu: 'admin_setting',
     },
     children: [
     {
@@ -64,7 +64,7 @@ export const adminRouters = [
       meta:{
         title: '报名必填',
         hidden: false,
-        menu: 'optional',
+        menu: 'admin_setting_optional',
         icon: 'Money'
       }
     },
@@ -75,7 +75,7 @@ export const adminRouters = [
       meta:{
         title: '报名规则',
         hidden: false,
-        menu: 'rules',
+        menu: 'admin_setiging_rules',
         icon: 'Printer'
       }
     }

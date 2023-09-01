@@ -28,9 +28,7 @@ router.beforeEach(async (to, from, next) => {
   // 2. 获取仓库中的用户名
   const username = useUserStore().userInfo.username
   // 有token表示已登录
-  // debugger
   if (token) {
-    debugger;
     // 有username 放行
     if (username) {
       // 如果没有路由，初始化路由
@@ -75,7 +73,7 @@ router.afterEach((to: any, from: any) => {
   nprogress.done()
 })
 
-let getNextParam = (path: string, endpoint: string) => {
+let getNextParam = (path: string, endpoint: number) => {
   if (path === '/home') {
     let homePath = endpointHome(endpoint)
     return {
@@ -88,13 +86,12 @@ let getNextParam = (path: string, endpoint: string) => {
   }
 }
 
-let endpointHome = (endpoint: string) => {
-  // debugger
-  if (endpoint === 'admin') {
+let endpointHome = (endpoint: number | null) => {
+  if (endpoint === 0) {
     return '/admin/home'
-  } else if (endpoint === 'manager') {
+  } else if (endpoint === 1) {
     return '/manager/home'
-  } else if (endpoint === 'unit') {
+  } else if (endpoint === 2) {
     return '/unit/home'
   }
 }

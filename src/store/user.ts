@@ -29,7 +29,7 @@ export const useUserStore = defineStore({
         hasRouter: false,
         avatar: '',
         username: '',
-        endpoint: '',
+        endpoint: null,
       }
     }
   },
@@ -55,13 +55,12 @@ export const useUserStore = defineStore({
       this.userInfo.adminRouters = []
       this.userInfo.managerRouters = []
       this.userInfo.unitRouters = []
-      this.userInfo.endpoint = ''
+      this.userInfo.endpoint = null
     },
 
     async getUserInfo() {
       let result: userInfoResponseData = await getInfo()
       if (result.code === 200) {
-        debugger;
         this.userInfo.username = result.data.username
         this.userInfo.avatar = result.data.avatar
         this.userInfo.endpoint = result.data.endpoint
@@ -87,7 +86,7 @@ export const useUserStore = defineStore({
         this.userInfo.adminMenus = []
         this.userInfo.managerMenus = []
         this.userInfo.unitMenus = []
-        this.userInfo.endpoint = ''
+        this.userInfo.endpoint = null
         location.reload()
         return 'ok'
       } else {

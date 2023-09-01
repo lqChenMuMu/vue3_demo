@@ -26,7 +26,7 @@ export interface userInfoResponseData extends ResponseData {
         managerMenus: string[]
         unitMenus: string[]
         buttons: string[],
-        endpoint: string
+        endpoint: number
     }
 }
 

@@ -12,5 +12,5 @@ export interface UserInfo {
     hasRouter: boolean,
     username: string | null,
     avatar: string,
-    endpoint: string
+    endpoint: number | null
 }
