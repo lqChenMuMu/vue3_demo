@@ -1,7 +1,7 @@
 // 通用分页查询参数
 export interface pageQueryParams{
     current: number,
-    limit: number
+    size: number
 }
 
 // 通用返回结果

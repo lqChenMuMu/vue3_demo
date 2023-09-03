@@ -3,7 +3,7 @@
     <!-- 下拉菜单 -->
     <el-dropdown>
       <span class="el-dropdown-link">
-        <img :src="userInfo.avatar" style="
+        <img :src="userAavtar" style="
             width: 26px;
             height: 26px;
             margin: 0px 10px;
@@ -27,6 +27,7 @@
 import { useUserStore } from '@/store/user'
 let userStore = useUserStore()
 let userInfo = userStore.userInfo
+let userAavtar = userInfo.avatar ? userInfo.avatar : '/src/assets/avatar.jpeg'
 
 //退出登录点击回调
 const logout = async () => {

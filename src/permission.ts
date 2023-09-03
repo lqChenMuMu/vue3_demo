@@ -31,6 +31,7 @@ router.beforeEach(async (to, from, next) => {
   if (token) {
     // 有username 放行
     if (username) {
+      debugger;
       // 如果没有路由，初始化路由
       if (!useRoutersStore().hasRouters()) {
         useRoutersStore().initRouters()
