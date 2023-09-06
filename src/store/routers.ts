@@ -31,6 +31,7 @@ export const useRoutersStore = defineStore({
     },
 
     initRouters() {
+      debugger;
        // 设置用户可以操作的菜单权限
        const userAdminMenus = filterUserMenu(
         cloneDeep(adminRouters),

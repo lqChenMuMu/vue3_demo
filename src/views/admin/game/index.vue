@@ -14,11 +14,14 @@
       </el-form-item>
       <el-form-item class="searchFormItem">
         <el-select v-model="searchParams.isOpen" placeholder="报名状态" clearable>
-          <el-option v-for="isOpen in isOpenOptions" :label="isOpen.label" :value="isOpen.value" />
+          <el-option v-for="isOpen in isOpenEnum" :label="isOpen.desc" :value="isOpen.code" />
         </el-select>
       </el-form-item>
       <el-form-item class="searchFormItem">
         <el-input v-model="searchParams.gameName" placeholder="赛事名称" clearable />
+      </el-form-item>
+      <el-form-item class="searchFormItem">
+        <el-checkbox v-model="searchParams.recently">近期赛事</el-checkbox>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="gamePageQuery">查询</el-button>
@@ -35,7 +38,7 @@
     </div>
 
     <div class="handle_container_right">
-      <el-button type="primary">新增</el-button>
+      <el-button type="primary" @click="openDialogAdd">新增</el-button>
     </div>
   </div>
 
@@ -44,13 +47,13 @@
     <el-table :data="tableData" border style="width: 100%" table-layout="auto" size="large"
       :header-cell-style="{ background: '#eef1f6', color: '#606266' }" v-loading="tableLoading">
       <el-table-column prop="gameName" label="比赛名称" />
-      <el-table-column prop="isOpen" label="报名状态" width="90" />
-      <el-table-column prop="gameType" label="赛事类型" width="90" />
-      <el-table-column prop="signUpTime" label="报名开始时间" width="170" />
-      <el-table-column prop="closeTime" label="报名结束时间" width="170" />
-      <el-table-column prop="beginTime" label="赛事开始时间" width="170" />
-      <el-table-column prop="endTime" label="赛事结束时间" width="170" />
-      <el-table-column prop="address" label="地点" width="100"/>
+      <el-table-column prop="isOpen" label="报名状态" width="90" :formatter="isOpenFormat" />
+      <el-table-column prop="gameType" label="赛事类型" width="90" :formatter="gameTypeFormat" />
+      <el-table-column prop="registrationBeginTime" label="报名开始时间" width="170" :formatter="registrationBeginTimeFormat"/>
+      <el-table-column prop="registrationEndTime" label="报名结束时间" width="170" :formatter="registrationEndTimeFormat"/>
+      <el-table-column prop="beginTime" label="赛事开始时间" width="170" :formatter="beginTimeFormat"/>
+      <el-table-column prop="endTime" label="赛事结束时间" width="170" :formatter="endTimeFormat"/>
+      <el-table-column prop="location" label="地点" width="100" />
       <el-table-column prop="gameId" label="进入">
         <template #default="{ row }">
           <!-- <router-link :to="{ path: '/manager/home' }" target="_blank">进入</router-link> -->
@@ -59,7 +62,7 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="180">
         <template #default>
-          <el-button link type="primary" size="small">修改</el-button>
+          <el-button link type="primary" size="small" @click="openDialogEdit">修改</el-button>
           <el-button link type="danger" size="small">删除</el-button>
           <el-button link type="primary" size="small">复制</el-button>
         </template>
@@ -68,33 +71,68 @@
 
     <!-- 分页 -->
     <div class="paginationContainer">
-      <el-pagination background layout="total, sizes, prev, pager, next" :total="gameTotal"  @size-change="handleSizeChange"
-      @current-change="handleCurrentChange" />
+      <el-pagination background layout="total, sizes, prev, pager, next" :total="gameTotal"
+        @size-change="handleSizeChange" @current-change="handleCurrentChange" />
     </div>
   </div>
+
+  <!-- 新增/修改弹窗 -->
+  <el-dialog
+    v-model="dialogVisible"
+    :title="dialogTitle"
+    width="40%"
+    :before-close="handleClose"
+  >
+    <GameForm v-model:game="gameForm"></GameForm>
+    <template #footer>
+        <span class="dialog-footer">
+            <el-button @click="dialogVisible = false">取消</el-button>
+            <el-button type="primary" @click="onSubmit">
+                确定
+            </el-button>
+        </span>
+    </template>
+  </el-dialog>
 </template>
 
 <script setup lang="ts">
 import { reactive, onMounted, ref } from 'vue'
 import router from '@/router'
+import GameForm from './form/form.vue'
 import { pageList } from '@/api/admin/game';
 import { game } from '@/api/admin/game/type';
+import { isOpenEnum, gameTypeEnum } from '@/constants/enums'
 
-const formInline = reactive({
-  user: '',
-  region: '',
-  date: '',
-})
+const searchOptions = {
+  years: [2023, 2022, 2021, 2020, 2019],
+  months: [
+    '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'
+  ],
+}
 
 const searchParams = reactive({
-  year: null,
+  year: searchOptions.years[0],
   month: null,
   isOpen: 1,
   gameName: '',
   recently: false,
-  limit: 10,
+  size: 10,
   current: 1
 })
+
+const gameForm = reactive({
+  gameName: '哈哈哈',
+  isOpen: 1,
+  gameType: 1,
+  registrationBeginTime: '',
+  registrationEndTime: '',
+  beginTime: '',
+  endTime: '',
+  location: '',
+  gameId: ''
+})
+const dialogVisible = ref(false)
+const dialogTitle = ref('新增赛事')
 
 let tableData = ref<game[]>();
 let gameTotal = ref()
@@ -113,36 +151,34 @@ const gamePageQuery = () => {
   tableLoading.value = false
 }
 
-function handleSizeChange(size: number){
-  searchParams.limit = size
+function handleSizeChange(size: number) {
+  searchParams.size = size
   gamePageQuery()
 }
 
-function handleCurrentChange(current: number){
+function handleCurrentChange(current: number) {
   searchParams.current = current
   gamePageQuery()
 }
 
-const searchOptions = {
-  years: ['2021', '2022', '2023'],
-  months: [
-    '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'
-  ],
+const handleClose = (done: any) => {
+  dialogVisible.value = false
+  done()
 }
 
-const isOpenOptions = [
-  {
-    label: '开启',
-    value: 1
-  },
-  {
-    label: '关闭',
-    value: 0
-  }
-]
+const openDialogAdd = () => {
+  dialogTitle.value = '新增赛事'
+  dialogVisible.value = true
+}
+
+const openDialogEdit = (row: any) => {
+  dialogTitle.value = '修改赛事'
+  dialogVisible.value = true
+}
 
 const onSubmit = () => {
   console.log('submit!')
+  alert(gameForm.gameName);
 }
 
 const entranceGame = (gameId: number) => {
@@ -150,6 +186,28 @@ const entranceGame = (gameId: number) => {
     path: "/manager/home",
   });
   window.open(newUrl.href, "_blank");
+}
+
+// table format
+const isOpenFormat = (row: any) => {
+  return isOpenEnum.find((item) => item.code === row.isOpen)?.desc
+}
+
+const gameTypeFormat = (row: any) => {
+  return gameTypeEnum.find((item) => item.code === row.gameType)?.desc
+}
+
+const registrationBeginTimeFormat = (row: any) => {
+  return row.registrationBeginTime.replace('00:00:00', '')
+}
+const registrationEndTimeFormat = (row: any) => {
+  return row.registrationEndTime.replace('00:00:00', '')
+}
+const beginTimeFormat = (row: any) => {
+  return row.beginTime.replace('00:00:00', '')
+}
+const endTimeFormat = (row: any) => {
+  return row.endTime.replace('00:00:00', '')
 }
 
 </script>
