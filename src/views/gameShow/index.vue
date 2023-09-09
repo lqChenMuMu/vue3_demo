@@ -6,14 +6,37 @@
             {{ title }}
         </div>
         <div class="filter-container">
-
+            <el-space wrap="" :size="20">
+                <el-select v-model="searchParams.year" class="m-1" placeholder="Select" size="large" id="yearSelect"
+                    @change="gameShow">
+                    <template #prefix>
+                        <div class="filter-label">
+                            年份
+                        </div>
+                    </template>
+                    <el-option v-for="year in yearOptional" :label="year" :value="year" :key="year" />
+                </el-select>
+                <el-select v-model="searchParams.month" clearable class="m-1" placeholder="" size="large" @change="gameShow">
+                    <template #prefix>
+                        <div class="filter-label">
+                            月份
+                        </div>
+                    </template>
+                    <el-option v-for="month in monthptional" :label="month" :value="month" :key="month" />
+                </el-select>
+            </el-space>
         </div>
         <div class="gameList">
-            <el-table :data="gameList" style="width: 100%" class="gameTable" :row-class-name="tableRowClassName">
-                <el-table-column prop="gameName" label="比赛名称" width="500"/>
-                <el-table-column prop="registrationTime" label="报名时间" width="280" />
-                <el-table-column prop="gameTime" label="比赛时间" width="280" />
-                <el-table-column label="操作" width="120" fixed="right">
+            <el-table :data="gameList" style="width: 100%" class="gameTable" v-loading="loading">
+                <el-table-column label="比赛名称" width="550">
+                    <template #default="scope">
+                        <el-link type="primary" @click="toLogin(scope.row.gameCode)">{{ scope.row.gameName }}</el-link>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="address" label="比赛地点" width="300" />
+                <el-table-column prop="registrationTime" label="报名时间" width="200" />
+                <el-table-column prop="gameTime" label="比赛时间" width="150" />
+                <el-table-column label="操作" width="120">
                     <template #default="scope">
                         <el-button v-if="scope.row.registering" link type="primary" size="small">点击报名</el-button>
                     </template>
@@ -25,39 +48,42 @@
 
 <script setup lang='ts'>
 import svgIcon from "@/components/SvgIcon/index.vue"
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
+import { getGameShow } from "@/api/index/index"
+import { gameShow } from "@/api/index/types"
+import { useRoute, useRouter } from "vue-router"
+let router = useRouter();
 let title = ref("全国田径竞赛管理信息系统-网上报名平台");
+let gameList = ref<gameShow[]>()
+let loading = ref(false)
+let yearOptional = reactive([2023, 2022, 2021, 2020, 2019])
+let monthptional = reactive(['', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+let searchParams = reactive({
+    year: 2023,
+    month: ''
+})
 
-let gameList = reactive([
-    {
-        gameName: '2023年全国大学生田径锦标赛',
-        address: '地点待定',
-        registrationTime: '2023-01-01 - 2023-01-31 18:00:00',
-        gameTime: '2023-05-01 - 2023-05-05',
-        gameLevel: 'III',
-        registering: true,
-    },
-    {
-        gameName: '第一届全国学生（青年）运动会（公开组）田径项目（决赛）',
-        address: '广西壮族自治区南宁市',
-        registrationTime: '2023-01-01 - 2023-01-31 18:00:00',
-        gameTime: '2023-05-01 - 2023-05-05',
-        gameLevel: 'III',
-        registering: false,
-    }
-])
+// --------------------------------------------------
+onMounted(() => {
+    gameShow();
+})
 
-const tableRowClassName = ({
-    row,
-    rowIndex,
-}: {
-    row: any
-    rowIndex: number
-}) => {
-    if (row.registering === true) {
-        return 'success-row'
-    }
-    return ''
+function gameShow() {
+    loading.value = true;
+    getGameShow(searchParams).then(res => {
+        gameList.value = res;
+    }).finally(() => {
+        loading.value = false;
+    })
+}
+
+function toLogin(gameCode: string){
+    router.push({
+        path: '/login',
+        query: {
+            gameCode: gameCode
+        }
+    })
 }
 
 </script>
@@ -80,14 +106,24 @@ const tableRowClassName = ({
 
     .filter-container {
         background-color: white;
-        height: 100px;
-        width: 70%;
+        width: 80%;
         margin: auto;
+        display: flex;
+        align-items: center;
+        padding: 20px;
+
+        .filter-label {
+            background-color: #337ecc;
+            width: 50px;
+            font-weight: bold;
+            color: white;
+        }
     }
+
 
     .gameList {
         background-color: white;
-        width: 70%;
+        width: 80%;
         margin: auto;
         margin-top: 10px;
         height: calc(100vh - 210px);

@@ -16,7 +16,7 @@
               <div class="formLeftContent">
                 <p class="loginWelcome">欢迎登陆</p>
                 <p class="loginGame">
-                  中国田径协会2023年体育传统项目学校田径联赛（总决赛）
+                  {{ loginGameInfo?.gameName }}
                 </p>
               </div>
             </div>
@@ -30,13 +30,15 @@
                     </el-form-item>
 
                     <el-form-item prop="password">
-                      <el-input clearable v-model="loginForm.password" show-password placeholder="密码" :prefix-icon="Lock"/>
+                      <el-input clearable v-model="loginForm.password" show-password placeholder="密码"
+                        :prefix-icon="Lock" />
                     </el-form-item>
 
                     <el-form-item prop="validCode">
                       <el-input v-model="loginForm.validCode">
                         <template #append>
-                          <el-image style="width: 100px; height: 100%" :src="validCodeBase64" fit="contain" @click="getValidCode"/>
+                          <el-image style="width: 100px; height: 100%" :src="validCodeBase64" fit="contain"
+                            @click="getValidCode" />
                         </template>
                       </el-input>
                     </el-form-item>
@@ -97,12 +99,14 @@ import { ElNotification } from 'element-plus'
 import { useUserStore } from '@/store/user'
 import { useRouter, useRoute } from 'vue-router'
 import { validImg } from '@/api/user'
+import { getLoginGameInfo } from '@/api/index/index'
 
 let $router = useRouter()
 let $route = useRoute()
+// 登录赛事信息
+const loginGameInfo = ref()
 // 验证码
 const validCodeBase64 = ref('')
-
 // 登录表单
 const refLoginForm = ref()
 // 登录表单
@@ -124,7 +128,7 @@ const loginRule = {
 onMounted(() => {
   // 加载验证码
   getValidCode()
-  console.log('地址：',import.meta.env.VITE_APP_BASE_API)
+  loginGameInfoQuery();
 })
 
 const getValidCode = () => {
@@ -132,6 +136,17 @@ const getValidCode = () => {
     validCodeBase64.value = res.data.validCodeBase64
     loginForm.validCodeReqNo = res.data.validCodeReqNo
   })
+}
+
+const loginGameInfoQuery = () => {
+  console.log($route.query.gameCode)
+  const gameCode = $route.query.gameCode;
+  if (typeof gameCode === 'string') {
+    getLoginGameInfo(gameCode).then(res => {
+      loginGameInfo.value = res
+      console.log("loginGameInfo", loginGameInfo.value)
+    })
+  }
 }
 
 // 登录
